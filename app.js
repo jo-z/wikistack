@@ -1,6 +1,8 @@
 const morgan = require('morgan');
-const express = require('express'); 
+const express = require('express');
 const { db, Page, User } = require('./models');
+const users=require('./routes/users');
+const wiki=require('./routes/wiki');
 
 morgan('dev');
 const app = express();
@@ -12,6 +14,8 @@ app.use(express.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
   res.send('hello whirl');
 })
+app.use('/wiki',wiki);
+app.use('/users',users);
 
 db.authenticate()
   .then(() => {
@@ -24,7 +28,7 @@ db.authenticate()
   }
 
   sync()
-    
+
 
 const PORT = 1337;
 
