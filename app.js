@@ -12,10 +12,14 @@ app.use(express.urlencoded({ extended: false }))
 
 
 app.get('/', (req, res) => {
-  res.send('hello whirl');
+  res.redirect('/wiki');
 })
 app.use('/wiki',wiki);
 app.use('/users',users);
+app.use((err, req, res, next)=>{
+  console.error(err);
+  res.sendStatus(400);
+})
 
 db.authenticate()
   .then(() => {
@@ -30,7 +34,7 @@ db.authenticate()
   sync()
 
 
-const PORT = 1337;
+const PORT = 8008;
 
 app.listen(PORT, () => {
   console.log(`App listening in port ${PORT}`);
